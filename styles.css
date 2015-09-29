@@ -1,0 +1,39 @@
+body {
+    margin-top: 100px;
+}
+.one,
+.two {
+    margin-left: 10%;
+    padding: 15px;
+    width: 70%;
+    min-height: 100px;
+    border-left: 5px solid #000;
+    overflow: scroll !important;
+    word-wrap: break-word;
+
+    
+}
+.one {
+    background: #DDD;
+    font-size: 1.2em;
+    margin-top: 50px;
+}
+.two {
+    background: RGBA(128, 87, 87, 0.44);
+    font-family: monospace;
+}
+.three {
+    margin-left: 10%;
+    width: 70%;
+}
+button {
+    padding: 10px;
+    width: 150px;
+    background: #DDD;
+    border: 2px solid #716C6C;
+    letter-spacing: 0.2em;
+}
+button:hover {
+    background: #87B2BC;
+    border: 2px solid #87B2BC;
+}

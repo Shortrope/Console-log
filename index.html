@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Console.log</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <section class="testScript">
+
+    </section>
+
+
+
+    <script>
+        // Ajax $.get seems to not work when the page is loaded in chrome directly. It works fine when the
+        // file is opened with brackets into chrome. 
+        $.get("script.js", function(data) {
+
+            // replaces extra spaces, and multiple line returns with single space and line return.
+            // splits the data where it has open comment (/*) and stores the result into an array.             
+
+            textArray = data.replace(/ {2,}/g, ' ').replace(/\/\*/g, "splithere").split("splithere").noSpaces("").noSpaces(" ");
+
+            // trims extra spaces from end and start of each index of the array.
+
+            textArray = $.map(textArray, $.trim);
+
+            // creats a loop and appends each index of the array to the assigned section in the html
+            // . All three divs are placed inside the section called (testscript). 
+            // I am using slice to remove the closing comment (*/). I tried different ways and got
+            // some errors. If the script.js has multiplication sign (*), the array will be splited where
+            // it runs to (*). 
+            for (var i = 0; i < textArray.length; i++) {
+
+                if (i % 2 == 0) {
+                    //$(".testScript").append("<section class=\"container\">");
+                    $(".testScript").append("<div class=\"one\"><pre><b>Instruction: </b><br/><br/>" + textArray[i].slice(0, ((textArray[i].length) - 2)) + "</pre></div><br/>");
+
+                    $(".testScript").append("<div class=\"two\"><pre><b>Code:</b><br/><br/>" + textArray[i + 1].slice(0, ((textArray[i + 1].length) - 2)) + "</pre><br/></div><br/>");
+
+                    $(".testScript").append("<div class=\"three\"><button onclick=\"next(" + (i + 1) + ")\" type=\"button\" class=\"theButton\">Console.Log</button><br/></div><br/><hr/>");
+                    //$(".testScript").append("</section>");
+
+                } else if (i % 2 !== 0) {
+                    continue;
+                }
+            };
+
+
+        }, 'text');
+
+        // This function takes the script for each step and uses eval (though risky) to run it
+        // in console window. 
+
+        function next(step) {
+
+            eval(textArray[step].slice(0, ((textArray[step].length) - 2)));
+            console.log("     < End of step >");
+            console.log("     < Try the next step... >");
+
+        };
+
+        // The function will remove the given parameter, which in this case is extra spaces
+        // inside the array. 
+        Array.prototype.noSpaces = function(deleteValue) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == deleteValue) {
+                    this.splice(i, 1);
+                    i--;
+                }
+            }
+            return this;
+        };
+
+    </script>
+</body>
+
+</html>
